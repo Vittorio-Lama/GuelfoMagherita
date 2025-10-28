@@ -19,7 +19,7 @@
   transition: transform .3s ease, box-shadow .3s ease;
   display: flex;
   flex-direction: column;
-  cursor: pointer; /* suggerisce che è cliccabile */
+  cursor: pointer;
 }
 .scheda-libro:hover {
   transform: translateY(-1px);
@@ -35,16 +35,20 @@
   background: #fff;
 }
 
-/* Pulsanti */
+/* Pulsanti base (visibili solo a card aperta) */
 .bottone-acquisto,
-.bottone2 {
+.bottone2,
+.bottone3 {
   background: #fff;
   padding: 1rem;
   text-align: center;
   z-index: 2;
 }
+
+/* Link dei pulsanti */
 .bottone-acquisto a,
-.bottone2 a {
+.bottone2 a,
+.bottone3 a {
   display: inline-block;
   padding: .5rem 1rem;
   border-radius: 6px;
@@ -53,10 +57,14 @@
   text-decoration: none;
   transition: background-color .25s ease;
 }
+
+/* Colori pulsanti */
 .bottone-acquisto a { background: #0077cc; }
 .bottone-acquisto a:hover { background: #005fa3; }
-.bottone2 a { background: #cc7e00; }
-.bottone2 a:hover { background: #b36e00; }
+.bottone2 a,
+.bottone3 a { background: #cc7e00; }
+.bottone2 a:hover,
+.bottone3 a:hover { background: #b36e00; }
 
 /* Info base nascosta sempre (evita riapparizioni) */
 .info-base { display: none !important; }
@@ -89,7 +97,7 @@
 .scheda-libro.expanded {
   width: 100% !important;
   display: grid !important;
-  grid-template-columns: minmax(260px, 40%) 1fr auto;
+  grid-template-columns: minmax(260px, 40%) 1fr auto auto auto; /* 3 colonne per i bottoni */
   gap: clamp(16px, 3vw, 28px);
   align-items: stretch;
   background: #fff;
@@ -105,7 +113,7 @@
   grid-row: 1 / span 2;
   width: 100%;
   height: 100%;
-  object-fit: cover;   /* copertina ben riempita */
+  object-fit: cover;
   border-radius: 10px;
 }
 
@@ -117,15 +125,16 @@
   pointer-events: auto !important;
   background: transparent !important;
   padding: 0 !important;
-  grid-column: 2 / 4; /* occupa testo + colonna bottoni */
+  grid-column: 2 / 6;  /* occupa il testo fino alla fine della riga bottoni */
   grid-row: 1;
-  max-height: 70vh;   /* ← limita l’altezza */
-  overflow-y: auto;   /* ← scorrevole */
+  max-height: 70vh;
+  overflow-y: auto;
 }
 
-/* Bottoni in riga inferiore, due colonne */
+/* Bottoni in riga inferiore: 3 colonne dedicate */
 .scheda-libro.expanded .bottone-acquisto,
-.scheda-libro.expanded .bottone2 {
+.scheda-libro.expanded .bottone2,
+.scheda-libro.expanded .bottone3 {
   display: block !important;
   background: transparent;
   padding: 0;
@@ -133,17 +142,22 @@
   grid-row: 2;
   text-align: center;
 }
+
 .scheda-libro.expanded .bottone-acquisto { grid-column: 2; }
 .scheda-libro.expanded .bottone2         { grid-column: 3; }
+.scheda-libro.expanded .bottone3         { grid-column: 4; }
+
 .scheda-libro.expanded .bottone-acquisto a,
-.scheda-libro.expanded .bottone2 a {
+.scheda-libro.expanded .bottone2 a,
+.scheda-libro.expanded .bottone3 a {
   margin: 1rem .4rem 0 .4rem;
 }
 
 /* Stato chiuso: mostra solo copertina, nascondi testo e bottoni */
 .libri-container .scheda-libro:not(.expanded) .info-hover,
 .libri-container .scheda-libro:not(.expanded) .bottone-acquisto,
-.libri-container .scheda-libro:not(.expanded) .bottone2 {
+.libri-container .scheda-libro:not(.expanded) .bottone2,
+.libri-container .scheda-libro:not(.expanded) .bottone3 {
   display: none !important;
 }
 
@@ -154,35 +168,32 @@
 /* Responsive stato APERTO: impila tutto in colonna */
 @media (max-width: 860px) {
   .scheda-libro.expanded { grid-template-columns: 1fr !important; }
+
   .scheda-libro.expanded > img {
     grid-column: 1; grid-row: 1;
     width: 100%; height: auto; aspect-ratio: 2/3; object-fit: cover;
   }
-  .scheda-libro.expanded .info-hover { grid-column: 1; grid-row: 2; margin-top: .5rem; max-height: none; }
-  .scheda-libro.expanded .bottone-acquisto,
-  .scheda-libro.expanded .bottone2 { grid-column: 1; grid-row: 3; }
-  .scheda-libro.expanded .bottone-acquisto a,
-  .scheda-libro.expanded .bottone2 a { margin: .75rem .35rem 0 .35rem; }
-}
 
-/* Mobile: bottoni in colonna, senza sovrapposizioni */
-@media (max-width: 860px) {
-  .scheda-libro.expanded {
-    grid-template-columns: 1fr !important;
+  .scheda-libro.expanded .info-hover {
+    grid-column: 1; grid-row: 2;
+    margin-top: .5rem; max-height: none;
   }
 
+  /* Bottoni in colonna, senza sovrapposizioni */
   .scheda-libro.expanded .bottone-acquisto,
-  .scheda-libro.expanded .bottone2 {
+  .scheda-libro.expanded .bottone2,
+  .scheda-libro.expanded .bottone3 {
     grid-column: 1 !important;
-    grid-row: auto !important;     /* ← niente righe fisse: vanno in pila */
+    grid-row: auto !important;
     margin: .5rem 0 0 0 !important;
     padding: 0 !important;
   }
 
   .scheda-libro.expanded .bottone-acquisto a,
-  .scheda-libro.expanded .bottone2 a {
-    display: block !important;     /* ← larghezza piena */
+  .scheda-libro.expanded .bottone2 a,
+  .scheda-libro.expanded .bottone3 a {
+    display: block !important;
     width: 90% !important;
-    margin: .5rem 0 0 0 !important;
+    margin: .5rem auto 0 auto !important;
   }
 }

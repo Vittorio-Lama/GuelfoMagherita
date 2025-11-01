@@ -10,19 +10,49 @@
 <body>
   <header>
     <h1>Leading Articles</h1>
-    <nav>
+    <nav class="mega-nav" aria-label="Navigazione principale">
+      <button class="burger" aria-expanded="false" aria-controls="mega-top">☰</button>
+      <ul id="mega-top" class="top-level">
+  <li class="has-submenu gm gm--blue">   <!-- primo: BLU -->
+    <button class="top-link" aria-expanded="false" aria-controls="submenu-1">Guelfo Margherita</button>
+    <div id="submenu-1" class="submenu">
       <ul>
-        <li><a href="index.html" class="active">Guelfo Margherita</a></li>
+        <li><a href="index.html#chi">Il gioco dei Chi?</a></li>
+        <li><a href="index.html#Bio">Biografia</a></li>
+        <li><a href="index.html#aspasso">a spasso nel cervello di guelfo</a></li>
+        <li><a href="index.html#lecarteindice">le carte: indice</a></li>
+      </ul>
+    </div>
+  </li>
+
+  <li class="has-submenu gm gm--green">  <!-- secondo: VERDE -->
+    <button class="top-link" aria-expanded="false" aria-controls="submenu-2">Guelfo Margherita</button>
+    <div id="submenu-2" class="submenu">
+      <ul>
         <li><a href="libri.html">Libri</a></li>
         <li><a href="articoli.html">Leading Aticles</a></li>
         <li><a href="video.html#teatro">Esperienze Teatrali</a></li>
         <li><a href="video.html#film">Film</a></li>
-        <li><a href="video.html">Video</a></li>
-        
-        <!-- <li><a href="eventi.html">Eventi</a></li>
-        <li><a href="brainstoarming.html">Brainstoarming</a></li>
-        <li><a href="foglivolanti.html">Fogli Volanti</a></li> -->
       </ul>
+    </div>
+  </li>
+
+  <li class="has-submenu gm gm--red">    <!-- terzo: ROSSO -->
+    <button class="top-link" aria-expanded="false" aria-controls="submenu-3">Guelfo Margherita</button>
+    <div id="submenu-3" class="submenu">
+      <ul>
+        <li><a href="video.html">Video</a></li>
+        <li><a href="video.html#seminari">Lezioni, conferenze e seminari</a></li>
+        <li><a href="video.html#libri">Presentazioni Libri</a></li>
+        <li><a href="">Brainstorming del Tiramisu</a></li>
+        <li><a href="">Grandi gruppi residenziali</a></li>
+        <li><a href="video.html#didattica">Didattica esperienziale</a></li>
+
+      </ul>
+    </div>
+  </li>
+</ul>
+  
     </nav>
   </header>
 

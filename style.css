@@ -497,3 +497,102 @@ figure.ritratto-box figcaption {
   display: none;
 }
 
+/* === NAV COMPATTA A 3 BOTTONI — pulita, stessa altezza, piccoli === */
+.mega-nav{
+  position: relative;
+  background: transparent;        /* niente quadrato nero */
+  border: 0;
+  padding: 0;
+  margin: 0;
+  overflow: visible;              /* consente al pannello di uscire */
+  z-index: 100;                   /* sopra al resto */
+}
+
+/* hamburger: rimosso */
+.mega-nav .burger{ display:none !important; }
+
+/* riga dei 3 bottoni, stessa dimensione */
+.mega-nav .top-level{
+  display: flex;
+  gap: 8px;                       /* piccolo distacco fra bottoni */
+  list-style: none;
+  margin: 6px 0 0 0;              /* aderente all’header */
+  padding: 0;
+}
+.mega-nav .top-level>li{
+  flex: 1 1 0;                    /* tutti uguali */
+  position: relative;
+}
+
+/* bottone compatto, stondato */
+.mega-nav .top-link{
+  width: 100%;
+  appearance: none;
+  border: 0;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: .2px;
+  height: 36px;                   /* PIÙ PICCOLO */
+  line-height: 36px;
+  padding: 0 10px;
+  border-radius: 10px;            /* stondatini */
+  cursor: pointer;
+  transition: filter .15s ease, transform .05s ease;
+}
+.mega-nav .top-link:hover{ filter: brightness(1.06); }
+.mega-nav .top-link:active{ transform: translateY(1px); }
+.mega-nav .top-link:focus-visible{ outline: 2px solid #fff; outline-offset: 2px; }
+
+/* colori dei tre bottoni (tutti allo stesso piano) */
+.gm--blue  .top-link{  background:#0d6efd; }
+.gm--green .top-link{  background:#198754; }
+.gm--red   .top-link{  background:#dc3545; }
+
+/* === PANNELLO SOTTILE CHE SI APRE SOTTO LA BARRA === */
+.mega-nav .submenu{
+  position: absolute;
+  left: 0; right: 0; top: calc(100% + 6px);
+  display: none;                  /* nessuno spazio quando chiuso */
+  background: #fff;
+  padding: 8px;
+  border: 2px solid transparent;  /* colore ereditato dal bottone attivo */
+  border-radius: 10px;            /* stondato */
+  box-shadow: 0 10px 24px rgba(0,0,0,.16);
+  z-index: 9999;                  /* sopra a tutto: cliccabile */
+}
+
+/* apri col click (aggiunge .open al <li>) */
+.mega-nav .has-submenu.open > .submenu{ display:block; }
+
+/* contenuto pill bianche */
+.mega-nav .submenu ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.mega-nav .submenu a{
+  background: #fff;
+  color: #222;
+  text-decoration: none;
+  padding: 8px 12px;
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 8px;             /* leggermente stondati */
+  transition: background .15s ease, border-color .15s ease, transform .05s ease;
+}
+.mega-nav .submenu a:hover{ background:#f6f9ff; border-color: rgba(0,0,0,.22); }
+.mega-nav .submenu a:active{ transform: scale(.98); }
+
+/* bordo del pannello secondo il tasto attivo */
+.gm--blue.open  > .submenu{ border-color:#0d6efd; }
+.gm--green.open > .submenu{ border-color:#198754; }
+.gm--red.open   > .submenu{ border-color:#dc3545; }
+
+/* sicurezza: l’header non deve tagliare il pannello */
+header{ position: relative; overflow: visible; }
+
+/* mobile: sempre piccoli uguale */
+@media (max-width:720px){
+  .mega-nav .top-level{ gap: 6px; }
+  .mega-nav .top-link{ height: 34px; line-height: 34px; font-size: .95rem; padding:0 8px; }
+}

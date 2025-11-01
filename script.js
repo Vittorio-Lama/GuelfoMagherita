@@ -48,4 +48,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 50);
   }
 }
+// 3 bottoni: apri/chiudi con click; uno alla volta; chiusura fuori/ESC.
+(function () {
+  const nav = document.querySelector('.mega-nav');
+  if (!nav) return;
+  const items = nav.querySelectorAll('.has-submenu');
 
+  function closeAll(except=null){
+    items.forEach(li=>{
+      if(li!==except){
+        li.classList.remove('open');
+        const b = li.querySelector('.top-link');
+        if (b) b.setAttribute('aria-expanded','false');
+      }
+    });
+  }
+
+  items.forEach(li=>{
+    const btn = li.querySelector('.top-link');
+    btn.setAttribute('aria-expanded','false');
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const willOpen = !li.classList.contains('open');
+      closeAll();
+      if (willOpen){
+        li.classList.add('open');
+        btn.setAttribute('aria-expanded','true');
+      }
+    });
+  });
+
+  // chiudi clic fuori
+  document.addEventListener('click', (e)=>{
+    if (!nav.contains(e.target)) closeAll();
+  });
+  // chiudi con ESC
+  document.addEventListener('keydown', (e)=>{
+    if (e.key === 'Escape') closeAll();
+  });
+})();

@@ -183,3 +183,75 @@
   background-color: #222;
 }
 
+/* ===== Sub–nav video: come la .channel-card ===== */
+.video-section .video-subnav{
+  list-style: none;
+  margin: 1rem 0 2rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.video-section .video-subnav li{ min-width: 0; }
+
+/* Stesso look&feel della .channel-card */
+.video-section .video-subnav a{
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  text-decoration: none;
+  color: #222;                           /* testo nero come la card */
+  background: #fff;                      /* bianco come la channel-card */
+  border-radius: 12px;                   /* stesso raggio */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);/* stessa ombra */
+  padding: 12px 16px;                    /* respiro simile */
+  font-weight: bold;
+  line-height: 1.25;
+  transition: background-color .2s ease,
+              box-shadow .2s ease,
+              transform .06s ease;
+  border: 0;                              /* niente bordo visibile */
+}
+
+/* Hover identico alla channel-card */
+.video-section .video-subnav a:hover{
+  background-color: rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+/* Press feedback */
+.video-section .video-subnav a:active{
+  transform: translateY(1px);
+}
+
+/* Focus coerente con il sito */
+.video-section .video-subnav a:focus-visible{
+  outline: 3px solid #0077cc;           /* come nav a.active */
+  outline-offset: 3px;
+}
+
+/* Freccia finale sobria (come “azione”) */
+.video-section .video-subnav a::after{
+  content: "›";
+  margin-left: auto;
+  opacity: .6;
+  transition: transform .1s ease, opacity .2s ease;
+}
+.video-section .video-subnav a:hover::after{
+  transform: translateX(2px);
+  opacity: .9;
+}
+
+/* Spazio se arrivano subito sotto la channel-card */
+.video-section .channel-card + .video-subnav{
+  margin-top: 1.25rem;
+}
+
+/* Riduci animazioni se richiesto */
+@media (prefers-reduced-motion: reduce){
+  .video-section .video-subnav a,
+  .video-section .video-subnav a::after{
+    transition: none;
+  }
+}

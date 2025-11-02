@@ -497,88 +497,108 @@ figure.ritratto-box figcaption {
   display: none;
 }
 
-/* === NAV COMPATTA A 3 BOTTONI — pulita, stessa altezza, piccoli === */
+/* === NAV COMPATTA A 3 BOTTONI === */
 .mega-nav{
   position: relative;
-  background: transparent;        /* niente quadrato nero */
+  background: transparent;
   border: 0;
   padding: 0;
   margin: 0;
-  overflow: visible;              /* consente al pannello di uscire */
-  z-index: 100;                   /* sopra al resto */
+  overflow: visible;
+  z-index: 100;
 }
 
-/* hamburger: rimosso */
 .mega-nav .burger{ display:none !important; }
 
-/* riga dei 3 bottoni, stessa dimensione */
 .mega-nav .top-level{
   display: flex;
-  gap: 8px;                       /* piccolo distacco fra bottoni */
+  gap: 8px;
   list-style: none;
-  margin: 6px 0 0 0;              /* aderente all’header */
+  margin: 6px 0 0 0;
   padding: 0;
 }
 .mega-nav .top-level>li{
-  flex: 1 1 0;                    /* tutti uguali */
+  flex: 1 1 0;
   position: relative;
+  min-width: 0;
 }
 
-/* bottone compatto, stondato */
+/* Bottoni principali */
 .mega-nav .top-link{
   width: 100%;
-  appearance: none;
   border: 0;
   color: #fff;
   font-weight: 700;
   letter-spacing: .2px;
-  height: 36px;                   /* PIÙ PICCOLO */
+  height: 36px;
   line-height: 36px;
   padding: 0 10px;
-  border-radius: 10px;            /* stondatini */
+  border-radius: 10px;
   cursor: pointer;
   transition: filter .15s ease, transform .05s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .mega-nav .top-link:hover{ filter: brightness(1.06); }
 .mega-nav .top-link:active{ transform: translateY(1px); }
 .mega-nav .top-link:focus-visible{ outline: 2px solid #fff; outline-offset: 2px; }
 
-/* colori dei tre bottoni (tutti allo stesso piano) */
 .gm--blue  .top-link{  background:#0d6efd; }
 .gm--green .top-link{  background:#198754; }
 .gm--red   .top-link{  background:#dc3545; }
 
-/* === PANNELLO SOTTILE CHE SI APRE SOTTO LA BARRA === */
+/* === SUBMENU (finestra sotto i bottoni) — centrato, elastico, no overflow === */
 .mega-nav .submenu{
   position: absolute;
-  left: 0; right: 0; top: calc(100% + 6px);
-  display: none;                  /* nessuno spazio quando chiuso */
-  background: #fff;
-  padding: 8px;
-  border: 2px solid transparent;  /* colore ereditato dal bottone attivo */
-  border-radius: 10px;            /* stondato */
-  box-shadow: 0 10px 24px rgba(0,0,0,.16);
-  z-index: 9999;                  /* sopra a tutto: cliccabile */
-}
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
 
-/* apri col click (aggiunge .open al <li>) */
+  background: #fff;
+  padding: 14px 16px;                 /* un filo più respiro */
+  border: 2px solid transparent;
+  border-radius: 10px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.16);
+  z-index: 9999;
+
+  /* si allarga per contenere bottoni lunghi, ma non esce dal viewport */
+  width: max-content;                 /* si adatta al contenuto */
+  max-width: calc(100vw - 24px);      /* mai oltre i bordi schermo */
+  box-sizing: border-box;
+
+  overflow-x: auto;                   /* se serve, scroll orizzontale */
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;  /* scroll fluido su mobile */
+}
 .mega-nav .has-submenu.open > .submenu{ display:block; }
 
-/* contenuto pill bianche */
+/* Contenuto: più spazio tra bottoni */
 .mega-nav .submenu ul{
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex; flex-wrap: wrap; gap: 8px;
+  display: inline-flex;               /* tiene la riga “stretta” al contenuto */
+  flex-wrap: wrap;                    /* permette andare a seconda riga se serve */
+  gap: 16px 12px;                     /* ↑ più spazio tra bottoni (Y X) */
 }
+
+/* Bottoni interni: MAI andare a capo; niente ellipsis; padding maggiore */
 .mega-nav .submenu a{
+  display: inline-flex;
+  align-items: center;
   background: #fff;
   color: #222;
   text-decoration: none;
-  padding: 8px 12px;
+  padding: 12px 18px;                 /* ↑ padding verticale */
   border: 1px solid rgba(0,0,0,.12);
-  border-radius: 8px;             /* leggermente stondati */
+  border-radius: 8px;
   transition: background .15s ease, border-color .15s ease, transform .05s ease;
+
+  white-space: nowrap;                /* non va a capo */
+  overflow: visible;                  /* lascia “espandere” il bottone */
+  text-overflow: clip;                /* nessun ellipsis */
 }
 .mega-nav .submenu a:hover{ background:#f6f9ff; border-color: rgba(0,0,0,.22); }
 .mega-nav .submenu a:active{ transform: scale(.98); }
@@ -591,8 +611,87 @@ figure.ritratto-box figcaption {
 /* sicurezza: l’header non deve tagliare il pannello */
 header{ position: relative; overflow: visible; }
 
-/* mobile: sempre piccoli uguale */
+/* === MOBILE: stesse regole, solo un po’ più comodo === */
 @media (max-width:720px){
   .mega-nav .top-level{ gap: 6px; }
-  .mega-nav .top-link{ height: 34px; line-height: 34px; font-size: .95rem; padding:0 8px; }
+  .mega-nav .top-link{
+    height: 34px;
+    line-height: 34px;
+    font-size: .95rem;
+    padding: 0 8px;
+  }
+
+  /* pannello sempre centrato e dentro schermo */
+  .mega-nav .submenu{
+    max-width: calc(100vw - 16px);    /* un filo più stretto per evitare tagli */
+    padding: 14px 16px;
+  }
+
+  /* bottoni più distanziati e facili da tappare */
+  .mega-nav .submenu ul{ gap: 18px 12px; }
+  .mega-nav .submenu a{
+    padding: 14px 18px;               /* target touch migliore */
+    font-size: 1rem;
+  }
+}
+
+/* Riduci motion */
+@media (prefers-reduced-motion: reduce){
+  .mega-nav .top-link,
+  .mega-nav .submenu a{ transition: none; }
+}
+
+/* Evita overflow laterale: allinea il pannello in base alla colonna */
+.mega-nav .top-level > li:first-child.open > .submenu{
+  /* BLU (sinistra): aggancia a sinistra del bottone */
+  left: 0;
+  right: auto;
+  transform: none;
+  max-width: min(980px, calc(100vw - 16px));
+  overflow-x: auto;
+}
+
+.mega-nav .top-level > li:last-child.open > .submenu{
+  /* ROSSO (destra): aggancia a destra del bottone */
+  right: 0;
+  left: auto;
+  transform: none;
+  max-width: min(980px, calc(100vw - 16px));
+  overflow-x: auto;
+}
+
+.mega-nav .top-level > li:nth-child(2).open > .submenu{
+  /* VERDE (centro): resta centrato */
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  max-width: min(980px, calc(100vw - 16px));
+  overflow-x: auto;
+}
+
+/* === FIX DEFINITIVO: pannelli blu e rosso rientrano visivamente di più === */
+:root{ --submenu-retract: 16px; } /* quanto rientrano: aumenta o riduci se serve */
+
+/* BLU — sposta indietro verso sinistra */
+.mega-nav .top-level > li:first-child.open > .submenu{
+  left: calc(0px - var(--submenu-retract)) !important;
+  right: auto !important;
+  transform: none !important;
+  max-width: calc(100vw - (var(--submenu-retract) * 2)) !important;
+}
+
+/* ROSSO — sposta indietro verso destra */
+.mega-nav .top-level > li:last-child.open > .submenu{
+  right: calc(0px - var(--submenu-retract)) !important;
+  left: auto !important;
+  transform: none !important;
+  max-width: calc(100vw - (var(--submenu-retract) * 2)) !important;
+}
+
+/* VERDE resta centrato, nessuna modifica */
+.mega-nav .top-level > li:nth-child(2).open > .submenu{
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  max-width: calc(100vw - (var(--submenu-retract) * 2));
 }

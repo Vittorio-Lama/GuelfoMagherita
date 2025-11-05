@@ -695,3 +695,46 @@ header{ position: relative; overflow: visible; }
   transform: translateX(-50%);
   max-width: calc(100vw - (var(--submenu-retract) * 2));
 }
+
+/* === Nuovo colore: GIALLO === */
+.gm--yellow .top-link{ background:#ffc107; color:#fff; }
+.gm--yellow.open > .submenu{ border-color:#ffc107; }
+
+/* === Layout a 4 bottoni: gestione bordi === */
+:root{ --submenu-retract: 22px; } /* margine di sicurezza laterale */
+
+/* 1) BLU (primo) – rientra dal bordo sinistro */
+.mega-nav .top-level > li:first-child.open > .submenu{
+  left: calc(0px - var(--submenu-retract)) !important;
+  right: auto !important;
+  transform: none !important;
+  max-width: calc(100vw - (var(--submenu-retract) * 2)) !important;
+}
+
+/* 2) VERDE (secondo) – centrato come prima */
+.mega-nav .top-level > li:nth-child(2).open > .submenu{
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  max-width: calc(100vw - (var(--submenu-retract) * 2)) !important;
+}
+
+/* 3) ROSSO (terzo) – anche lui centrato (ora non è più l'ultimo) */
+.mega-nav .top-level > li:nth-child(3).open > .submenu{
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-60%) !important;
+  max-width: calc(100vw - (var(--submenu-retract) * 2)) !important;
+}
+
+/* 4) GIALLO (ultimo) – rientra dal bordo destro */
+.mega-nav .top-level > li:last-child.open > .submenu{
+  right: calc(0px - var(--submenu-retract)) !important;
+  left: auto !important;
+  transform: none !important;
+  max-width: calc(100vw - (var(--submenu-retract) * 2)) !important;
+}
+
+/* (opzionale) un filo più aria verticale tra bottoni del pannello */
+.mega-nav .submenu ul{ gap: 16px 12px; }
+.mega-nav .submenu a{ padding: 12px 18px; }

@@ -5,28 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Guelfo Marghetita | Eventi</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="video.css" />
 </head>
 <body>
+
   <header>
     <h1>Eventi</h1>
     <div id="nav-placeholder"></div>
   </header>
 
-  <main>
-    <section>
-      <p>Questa sezione del sito non è ancora disponibile.</p>
-    </section>
+  <main class="video-section">
+
+    <h2>Eventi</h2>
+
+  <ul class="video-subnav">
+  <li><a href="locandine/DOC-20241010-WA0027..pdf" target="_blank">Università Benevento</a></li>
+  <li><a href="locandine/GIORNATA CAPRESE (1).pdf" target="_blank">Giornata Caprese</a></li>
+
+
+  </ul>
+
   </main>
 
   <footer id="footer-placeholder"></footer>
-<script>
-  fetch('footer.html')
-    .then(res => res.text())
-    .then(data => {
-      document.getElementById('footer-placeholder').innerHTML = data;
-    });
-</script>
-
-<script src="script.js"></script>
+  <script>
+    fetch('footer.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('footer-placeholder').innerHTML = data;
+      });
+  </script>
+  <script src="script.js"></script>
 </body>
 </html>
+  
